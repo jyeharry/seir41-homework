@@ -23,7 +23,7 @@ class SinglyLinkedList
   end
 
   def append(value)
-    last.next = Node.new value
+    self.last().next = Node.new value
   end
 
   def last
@@ -34,7 +34,8 @@ class SinglyLinkedList
   end
 
   def remove # remove first node or return nil if no nodes
-
+    node = @head
+    @head = @head.next
   end
 
   def insert_after(node, new_value)
@@ -46,19 +47,34 @@ class SinglyLinkedList
   end
 
   def reverse
-
+    reversed_list = SinglyLinkedList.new
+    current_node = @head
+    while current_node
+      reversed_list.prepend(current_node.value)
+      current_node = current_node.next
+    end
   end
 
   def reverse!
-
+    @head = self.reverse.head
   end
 
   def each
-
+    current_node = @head
+    index = 0
+    while current_node
+      yield(current_node.value, index) if block_given?
+      current_node = current_node.next
+      index += 1
+    end
   end
 
   # bonus: .map .reduce .select .reject
   # bonus: .at_index(i)
 end
 
+ll = SinglyLinkedList.new 0
+ll.prepend(1)
+ll.prepend(2)
+ll.prepend(3)
 binding.pry
